@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">NewsApplication</string>
+    <string name="faviorties">Faviorties</string>
+    <string name="following">Following</string>
+    <string name="favorites">favorites</string>
+    <string name="all_headlines">All headlines</string>
+    <string name="settings">Settings</string>
 </resources>
