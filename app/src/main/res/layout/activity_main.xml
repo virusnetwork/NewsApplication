@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <!-- Media -->
+                    <!-- headline image -->
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="194dp"
@@ -43,13 +43,14 @@
                         android:orientation="vertical"
                         android:padding="16dp">
 
-                        <!-- Title, secondary and supporting text -->
+                        <!-- Headline Text -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Coronavirus outbreak detected at Waldo County church - Portland Press Herald - Press Herald"
                             android:textAppearance="?attr/textAppearanceHeadline6" />
 
+                        <!--Article source -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -58,6 +59,7 @@
                             android:textAppearance="?attr/textAppearanceBody1"
                             android:textColor="?android:attr/textColorSecondary" />
 
+                        <!-- Article description -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -75,31 +77,30 @@
                         android:layout_margin="8dp"
                         android:orientation="horizontal">
 
-                        <com.google.android.material.button.MaterialButton
-                            style="?attr/borderlessButtonStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:text="Faviortie" />
-
-                        <com.google.android.material.button.MaterialButton
-                            style="?attr/borderlessButtonStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Follow" />
-
                         <ImageButton
                             android:id="@+id/favbutton2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            app:srcCompat="@drawable/baseline_favorite_24" />
+                            app:srcCompat="@drawable/baseline_favorite_white_18dp" />
+                        <ImageButton
+                            android:id="@+id/followButton2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/baseline_flag_white_18dp" />
+
+                        <ImageButton
+                            android:id="@+id/saveButton2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/baseline_star_white_18dp" />
 
                         <ImageButton
                             android:id="@+id/shareButton2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/baseline_share_24" />
+                            app:srcCompat="@drawable/baseline_share_white_18dp" />
 
                     </LinearLayout>
                 </LinearLayout>
