@@ -22,6 +22,7 @@
 
             <!-- headline image -->
             <ImageView
+                android:id="@+id/articleImageView"
                 android:layout_width="match_parent"
                 android:layout_height="194dp"
                 android:scaleType="centerCrop"

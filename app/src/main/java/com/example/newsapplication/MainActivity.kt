@@ -2,6 +2,7 @@ package com.example.newsapplication
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.GsonBuilder
@@ -10,10 +11,12 @@ import java.io.IOException
 
 /*
     TODO implement go to url
-    TODO change image from url
     TODO change publisher to source
     TODO implement setting window
     TODO implement firebase
+    TODO implement faviortes
+    TODO implement following
+    TODO allow search features
  */
 
 class MainActivity : AppCompatActivity() {
