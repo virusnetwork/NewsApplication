@@ -1,16 +1,13 @@
 package com.example.newsapplication.Main
 
-import android.content.ClipData
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapplication.*
+import com.example.newsapplication.Models.Articles
+import com.example.newsapplication.Models.testData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.GsonBuilder
 import okhttp3.*
@@ -46,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             findViewById<BottomNavigationView>(R.id.bottomNav) as BottomNavigationView
         val followingIntent = Intent(this,followingActivity::class.java)
         val mainActivityIntent = Intent(this,MainActivity::class.java)
-        val settingActivityIntent = Intent(this,settingsAdapter::class.java)
+        val settingActivityIntent = Intent(this,SettingsAcitvity::class.java)
 
         bnv.setOnNavigationItemSelectedListener { item ->
             when (item.getItemId()) {
@@ -62,8 +59,8 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun getNews() {
-        val url =
-            "http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=cb2d036fd31f441da320db9ffcf548a5"
+        val country = "&country=us"
+        val url = "http://newsapi.org/v2/top-headlines$country${Companion.API_KEY}"
         val newsRequest = Request.Builder()
             .url(url)
             .build()
@@ -87,6 +84,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<RecyclerView>(R.id.recyclerView).adapter = mainAdapter(articles)
         findViewById<RecyclerView>(R.id.recyclerView).layoutManager = LinearLayoutManager(this)
     }
+
+    companion object {
+        const val API_KEY: String = "&apiKey=cb2d036fd31f441da320db9ffcf548a5"
+    }
 }
 
-class Articles(val status: String, val totalResults: Int, val articles: Array<Article>)

@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".settingsAdapter">
+        <activity android:name=".SettingsAcitvity">
             <intent-filter>
                 <action android:name="android.intent.action.SETTING" />
 

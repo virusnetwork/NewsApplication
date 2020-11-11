@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsapplication.Models.Articles
 import com.example.newsapplication.R
 import com.squareup.picasso.Picasso
 
