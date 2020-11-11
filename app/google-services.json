@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "602181808900",
+    "firebase_url": "https://csc306coursework.firebaseio.com",
+    "project_id": "csc306coursework",
+    "storage_bucket": "csc306coursework.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602181808900:android:77b495b1092cb1c2575651",
+        "android_client_info": {
+          "package_name": "com.example.newsapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602181808900-onrvesls1mfp91672r00b5ff2vnr63sq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSTeCvZtR5POEs7B0KiQ_CQqZy-YkSJIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602181808900-onrvesls1mfp91672r00b5ff2vnr63sq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
