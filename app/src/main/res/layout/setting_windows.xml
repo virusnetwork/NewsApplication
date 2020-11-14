@@ -50,12 +50,14 @@
                         android:id="@+id/sign_in_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/sign_in" />
+                        android:text="@string/sign_in"
+                        android:textColor="@color/white"/>
 
                     <Button
                         android:id="@+id/sign_up_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
                         android:text="@string/sign_up" />
                 </LinearLayout>
 
@@ -87,12 +89,18 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/preferredCountryText"
-                            android:layout_width="wrap_content"
+                            android:layout_width="379dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:layout_weight="2"
                             android:text="@string/preferredCountry"
                             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                        <Spinner
+                            android:id="@+id/countryDropDown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2" />
 
                     </LinearLayout>
 

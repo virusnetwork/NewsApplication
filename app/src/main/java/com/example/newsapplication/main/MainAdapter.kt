@@ -1,4 +1,4 @@
-package com.example.newsapplication.Main
+package com.example.newsapplication.main
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsapplication.Models.Articles
+import com.example.newsapplication.models.Articles
 import com.example.newsapplication.R
 import com.squareup.picasso.Picasso
 
@@ -32,7 +32,7 @@ class mainAdapter(val articles: Articles) : RecyclerView.Adapter<mainAdapter.cus
         holder.descriptionTextView.text = article.description
         holder.publisherTextView.text = article.source.name
         holder.titleTextView.text = article.title
-        Picasso.with(holder.articleImageView.context).load(article.urlToImage).into(holder.articleImageView)
+        Picasso.get().load(article.urlToImage).into(holder.articleImageView)
 
 
     }

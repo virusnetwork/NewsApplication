@@ -1,4 +1,4 @@
-package com.example.newsapplication.Main
+package com.example.newsapplication.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapplication.*
-import com.example.newsapplication.Models.Articles
-import com.example.newsapplication.Models.testData
+import com.example.newsapplication.settings.SettingsAcitvity
+import com.example.newsapplication.models.Articles
+import com.example.newsapplication.models.testData
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException
@@ -16,8 +18,8 @@ import java.io.IOException
 /*
     TODO implement go to url
     TODO change publisher to source
-    TODO implement setting window
-    TODO implement firebase
+    TODO implement user prefrence
+    TODO fix URL
     TODO implement faviortes
     TODO implement following
     TODO allow search features
@@ -34,16 +36,15 @@ class MainActivity : AppCompatActivity() {
         articles = GsonBuilder().create().fromJson(testData, Articles::class.java)
         initialseRecylerViewAdapter()
         navBar()
-
+        val db = FirebaseFirestore.getInstance()
     }
-
 
     private fun navBar() {
         val bnv: BottomNavigationView =
             findViewById<BottomNavigationView>(R.id.bottomNav) as BottomNavigationView
-        val followingIntent = Intent(this,followingActivity::class.java)
-        val mainActivityIntent = Intent(this,MainActivity::class.java)
-        val settingActivityIntent = Intent(this,SettingsAcitvity::class.java)
+        val followingIntent = Intent(this, followingActivity::class.java)
+        val mainActivityIntent = Intent(this, MainActivity::class.java)
+        val settingActivityIntent = Intent(this, SettingsAcitvity::class.java)
 
         bnv.setOnNavigationItemSelectedListener { item ->
             when (item.getItemId()) {
