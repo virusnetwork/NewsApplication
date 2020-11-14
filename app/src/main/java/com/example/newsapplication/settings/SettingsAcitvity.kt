@@ -25,9 +25,6 @@ class SettingsAcitvity : AppCompatActivity() {
         setUp()
         navBar()
 
-
-
-
         findViewById<Button>(R.id.sign_up_button).setOnClickListener {
             val emailText = findViewById<EditText>(R.id.editTextTextEmailAddress).text.toString()
             val passwordText = findViewById<EditText>(R.id.editTextTextPassword).text.toString()
@@ -56,7 +53,19 @@ class SettingsAcitvity : AppCompatActivity() {
                 .putBoolean("darkmode", false).apply()
         }
 
+        findViewById<Spinner>(R.id.countryDropDown).onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                p0: AdapterView<*>?, p1: View?, p2: Int, p3:
+                Long
+            ) {
+                getSharedPreferences("userprofile", Context.MODE_PRIVATE).edit()
+                    .putInt("country", p2).apply()
+            }
 
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+        }
     }
 
     private fun setUp() {
@@ -65,6 +74,8 @@ class SettingsAcitvity : AppCompatActivity() {
             userPref.getBoolean("darkmode", false)
         findViewById<SwitchCompat>(R.id.dataSaverSwitch).isChecked =
             userPref.getBoolean("datamode", false)
+
+
 
         setSpinner()
     }
@@ -77,6 +88,9 @@ class SettingsAcitvity : AppCompatActivity() {
             val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, countries)
             spinner.adapter = adapter
         }
+        findViewById<Spinner>(R.id.countryDropDown).setSelection(
+            getSharedPreferences("userprofile", Context.MODE_PRIVATE).getInt("country", 0)
+        )
     }
 
     private fun signInUser(emailText: String, passwordText: String) {
