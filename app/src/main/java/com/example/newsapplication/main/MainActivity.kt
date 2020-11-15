@@ -32,11 +32,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //getNews()
-        articles = GsonBuilder().create().fromJson(testData, Articles::class.java)
-        initialseRecylerViewAdapter()
+        findViewById<RecyclerView>(R.id.recyclerView).layoutManager = LinearLayoutManager(this)
+        getNews()
         navBar()
-        val db = FirebaseFirestore.getInstance()
     }
 
     private fun navBar() {
@@ -60,12 +58,13 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun getNews() {
-        val country = "&country=us"
-        val url = "http://newsapi.org/v2/top-headlines$country${Companion.API_KEY}"
+        val country = "country=us"
+        val url = "http://newsapi.org/v2/top-headlines?country=us&apiKey=cb2d036fd31f441da320db9ffcf548a5"
         val newsRequest = Request.Builder()
             .url(url)
             .build()
         val client = OkHttpClient()
+
         client.newCall(newsRequest).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 println(e.message)
@@ -76,14 +75,18 @@ class MainActivity : AppCompatActivity() {
 
                 val gson = GsonBuilder().create()
                 articles = gson.fromJson(body, Articles::class.java)
+
+                runOnUiThread {
+                    initialseRecylerViewAdapter(articles)
+                }
             }
         })
     }
 
-    private fun initialseRecylerViewAdapter() {
-        //TODO implement wait for other thread to finish
-        findViewById<RecyclerView>(R.id.recyclerView).adapter = mainAdapter(articles)
-        findViewById<RecyclerView>(R.id.recyclerView).layoutManager = LinearLayoutManager(this)
+    private fun initialseRecylerViewAdapter(articles: Articles) {
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.adapter = mainAdapter(articles)
+
     }
 
     companion object {
