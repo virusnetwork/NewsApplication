@@ -1,16 +1,16 @@
 package com.example.newsapplication.main
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsapplication.*
-import com.example.newsapplication.settings.SettingsAcitvity
+import com.example.newsapplication.R
+import com.example.newsapplication.followingActivity
 import com.example.newsapplication.models.Articles
-import com.example.newsapplication.models.testData
+import com.example.newsapplication.settings.SettingsAcitvity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException
@@ -19,10 +19,10 @@ import java.io.IOException
     TODO implement go to url
     TODO change publisher to source
     TODO implement user prefrence
-    TODO fix URL
+    TODO URL builder
     TODO implement faviortes
     TODO implement following
-    TODO allow search features
+    TODO implement search features
  */
 
 class MainActivity : AppCompatActivity() {
@@ -56,12 +56,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun URLBuilder(): String {
+        val builder = Uri.Builder()
+        builder.scheme("https")
+            .authority("newsapi.org")
+            .appendPath("v2")
+            .appendPath("top-headlines")
+            .appendQueryParameter("country", "us")
+            .appendQueryParameter("apiKey", "cb2d036fd31f441da320db9ffcf548a5")
+        return builder.build().toString()
+    }
+
 
     private fun getNews() {
         val country = "country=us"
         val url = "http://newsapi.org/v2/top-headlines?country=us&apiKey=cb2d036fd31f441da320db9ffcf548a5"
         val newsRequest = Request.Builder()
-            .url(url)
+            .url(URLBuilder())
             .build()
         val client = OkHttpClient()
 
@@ -78,6 +89,7 @@ class MainActivity : AppCompatActivity() {
 
                 runOnUiThread {
                     initialseRecylerViewAdapter(articles)
+                    println(URLBuilder())
                 }
             }
         })
@@ -87,10 +99,6 @@ class MainActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.adapter = mainAdapter(articles)
 
-    }
-
-    companion object {
-        const val API_KEY: String = "&apiKey=cb2d036fd31f441da320db9ffcf548a5"
     }
 }
 

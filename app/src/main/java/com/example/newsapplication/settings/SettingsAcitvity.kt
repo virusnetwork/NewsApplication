@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.SwitchCompat
 import com.example.newsapplication.main.MainActivity
 import com.example.newsapplication.R
@@ -25,14 +26,14 @@ class SettingsAcitvity : AppCompatActivity() {
         setUp()
         navBar()
 
-        findViewById<Button>(R.id.sign_up_button).setOnClickListener {
-            val emailText = findViewById<EditText>(R.id.editTextTextEmailAddress).text.toString()
+        findViewById<Button>(R.id.sign_up_button).setOnClickListener { view ->
+            val emailText = findViewById<EditText>(R.id.editTextEmailAddress).text.toString()
             val passwordText = findViewById<EditText>(R.id.editTextTextPassword).text.toString()
             signUp(emailText, passwordText)
         }
 
-        findViewById<Button>(R.id.sign_in_button).setOnClickListener {
-            val emailText = findViewById<EditText>(R.id.editTextTextEmailAddress).text.toString()
+        findViewById<Button>(R.id.sign_in_button).setOnClickListener { view ->
+            val emailText = findViewById<EditText>(R.id.editTextEmailAddress).text.toString()
             val passwordText = findViewById<EditText>(R.id.editTextTextPassword).text.toString()
             signInUser(emailText, passwordText)
         }
@@ -66,6 +67,10 @@ class SettingsAcitvity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
         }
+
+        findViewById<Button>(R.id.sign_out_button).setOnClickListener { view ->
+            signOut()
+        }
     }
 
     private fun setUp() {
@@ -75,9 +80,8 @@ class SettingsAcitvity : AppCompatActivity() {
         findViewById<SwitchCompat>(R.id.dataSaverSwitch).isChecked =
             userPref.getBoolean("datamode", false)
 
-
-
         setSpinner()
+
     }
 
     private fun setSpinner() {
@@ -94,7 +98,6 @@ class SettingsAcitvity : AppCompatActivity() {
     }
 
     private fun signInUser(emailText: String, passwordText: String) {
-
         val btnLogin = findViewById<Button>(R.id.sign_in_button)
         btnLogin.setOnClickListener { view ->
             mAuth = FirebaseAuth.getInstance()
@@ -119,10 +122,12 @@ class SettingsAcitvity : AppCompatActivity() {
                             sharedPreference.putString("password", passwordText)
                                 .apply()
                         }
-                        findViewById<Button>(R.id.editTextTextEmailAddress).isEnabled = false
-                        findViewById<Button>(R.id.editTextTextPassword).isEnabled = false
+                        findViewById<AppCompatEditText>(R.id.editTextEmailAddress).isEnabled =
+                            false
+                        findViewById<AppCompatEditText>(R.id.editTextTextPassword).isEnabled = false
                         btnLogin.isEnabled = false
                         findViewById<Button>(R.id.sign_up_button).isEnabled = false
+                        findViewById<Button>(R.id.sign_out_button).isEnabled = true
                     } else {
                         println("Can't login")
                     }
@@ -158,10 +163,14 @@ class SettingsAcitvity : AppCompatActivity() {
         }
     }
 
-    private fun logedIn() {
-        //TODO stop user entering text to email/password
-        //TODO make sign in button say sign out
-        //TODO hide create account button
+    private fun signOut() {
+        FirebaseAuth.getInstance().signOut()
+        findViewById<AppCompatEditText>(R.id.editTextEmailAddress).isEnabled =
+            true
+        findViewById<AppCompatEditText>(R.id.editTextTextPassword).isEnabled = true
+        findViewById<Button>(R.id.sign_in_button).isEnabled = true
+        findViewById<Button>(R.id.sign_up_button).isEnabled = true
+        FirebaseAuth.getInstance().signOut()
     }
 
     private fun navBar() {

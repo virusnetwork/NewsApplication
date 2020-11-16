@@ -20,4 +20,5 @@
     <string name="email">email</string>
     <string name="password">Password</string>
     <string name="log_out">log out</string>
+    <string name="sign_out">sign out</string>
 </resources>
