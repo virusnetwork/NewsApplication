@@ -1,9 +1,14 @@
 package com.example.newsapplication.main
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapplication.R
@@ -35,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<RecyclerView>(R.id.recyclerView).layoutManager = LinearLayoutManager(this)
         getNews()
         navBar()
+
     }
 
     private fun navBar() {
@@ -95,10 +101,19 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    fun goToURL(view:View){
+       var website = Uri.parse(view.findViewById<TextView>(R.id.URL).text.toString())
+       var webIntent = Intent(Intent.ACTION_VIEW,website)
+        startActivity(webIntent)
+
+
+    }
+
     private fun initialseRecylerViewAdapter(articles: Articles) {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.adapter = mainAdapter(articles)
 
     }
+
 }
 

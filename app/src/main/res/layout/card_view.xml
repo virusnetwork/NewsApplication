@@ -11,7 +11,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:onClick="goToURL">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,6 +60,13 @@
                     android:text = "@string/description"
                     android:textAppearance="?attr/textAppearanceBody1"
                     android:textColor="?android:attr/textColorSecondary" />
+
+                <TextView
+                    android:id="@+id/URL"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

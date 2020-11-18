@@ -1,14 +1,17 @@
 package com.example.newsapplication.main
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsapplication.models.Articles
 import com.example.newsapplication.R
+import com.example.newsapplication.models.Articles
 import com.squareup.picasso.Picasso
 
 
@@ -32,23 +35,25 @@ class mainAdapter(val articles: Articles) : RecyclerView.Adapter<mainAdapter.cus
         holder.descriptionTextView.text = article.description
         holder.publisherTextView.text = article.source.name
         holder.titleTextView.text = article.title
+        holder.URLTextVIew.text = article.url
         Picasso.get().load(article.urlToImage).into(holder.articleImageView)
 
 
     }
+
 
     inner class customViewHolder(private val itemView: View) : RecyclerView.ViewHolder(itemView) {
         var titleTextView = itemView.findViewById<TextView>(R.id.textView_Title) as TextView
         var descriptionTextView =
             itemView.findViewById<TextView>(R.id.textView_description) as TextView
         var publisherTextView = itemView.findViewById<TextView>(R.id.textView_Publisher) as TextView
+        var URLTextVIew = itemView.findViewById<TextView>(R.id.URL) as TextView
 
         var cardView = itemView.findViewById<CardView>(R.id.newsStoryCard) as CardView
         var articleImageView = itemView.findViewById<ImageView>(R.id.articleImageView) as ImageView
 
 
     }
-
 }
 
 
