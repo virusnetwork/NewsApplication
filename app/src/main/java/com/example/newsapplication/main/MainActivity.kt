@@ -21,10 +21,7 @@ import okhttp3.*
 import java.io.IOException
 
 /*
-    TODO implement go to url
     TODO change publisher to source
-    TODO implement user prefrence
-    TODO URL builder
     TODO implement faviortes
     TODO implement following
     TODO implement search features
