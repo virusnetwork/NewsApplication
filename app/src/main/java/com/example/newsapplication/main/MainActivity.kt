@@ -73,7 +73,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun getNews() {
         val country = "country=us"
-        val url = "http://newsapi.org/v2/top-headlines?country=us&apiKey=cb2d036fd31f441da320db9ffcf548a5"
+        val url =
+            "http://newsapi.org/v2/top-headlines?country=us&apiKey=cb2d036fd31f441da320db9ffcf548a5"
         val newsRequest = Request.Builder()
             .url(URLBuilder())
             .build()
@@ -98,11 +99,13 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun goToURL(view:View){
-       var website = Uri.parse(view.findViewById<TextView>(R.id.URL).text.toString())
-       var webIntent = Intent(Intent.ACTION_VIEW,website)
-        startActivity(webIntent)
-
+    fun goToURL(view: View) {
+        startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(view.findViewById<TextView>(R.id.URL).text.toString())
+            )
+        )
 
     }
 

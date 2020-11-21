@@ -21,4 +21,10 @@
     <string name="password">Password</string>
     <string name="log_out">log out</string>
     <string name="sign_out">sign out</string>
+    <string name="technology">technology</string>
+    <string name="science">science</string>
+    <string name="entertainment">entertainment</string>
+    <string name="general">general</string>
+    <string name="health">health</string>
+    <string name="sports">sports</string>
 </resources>

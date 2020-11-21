@@ -8,9 +8,9 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.SwitchCompat
-import com.example.newsapplication.main.MainActivity
 import com.example.newsapplication.R
 import com.example.newsapplication.followingActivity
+import com.example.newsapplication.main.MainActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -25,6 +25,8 @@ class SettingsAcitvity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         setUp()
         navBar()
+        setImgButton()
+        initaliseImgButton()
 
         findViewById<Button>(R.id.sign_up_button).setOnClickListener { view ->
             val emailText = findViewById<EditText>(R.id.editTextEmailAddress).text.toString()
@@ -70,6 +72,95 @@ class SettingsAcitvity : AppCompatActivity() {
 
         findViewById<Button>(R.id.sign_out_button).setOnClickListener { view ->
             signOut()
+        }
+    }
+
+    private fun initaliseImgButton()
+    {
+        findViewById<View>(R.id.entertainmentFavButton).setOnClickListener { _ ->
+            catergoryButtononCLick(
+                findViewById(R.id.entertainmentFavButton),
+                "entertainment",
+                "fav"
+            )
+        }
+        findViewById<View>(R.id.generalFavButton).setOnClickListener {_ ->
+            catergoryButtononCLick(
+                findViewById(R.id.generalFavButton),
+                "general",
+                "fav"
+            )
+        }
+        findViewById<View>(R.id.healthFavButton).setOnClickListener {_ ->
+            catergoryButtononCLick(
+                findViewById(R.id.healthFavButton),
+                "health",
+                "fav"
+            )
+        }
+        findViewById<View>(R.id.scienceFavButton).setOnClickListener {_ ->
+            catergoryButtononCLick(
+                findViewById(R.id.scienceFavButton),
+                "science",
+                "fav"
+            )
+        }
+        findViewById<View>(R.id.sportsFavButton).setOnClickListener {_ ->
+            catergoryButtononCLick(
+                findViewById(R.id.sportsFavButton),
+                "sports",
+                "fav"
+            )
+        }
+        findViewById<View>(R.id.technologyFavButton).setOnClickListener {_ ->
+            catergoryButtononCLick(
+                findViewById(R.id.technologyFavButton),
+                "technology",
+                "fav"
+            )
+        }
+
+        findViewById<View>(R.id.entertainmentFollowButton).setOnClickListener {_ ->
+            catergoryButtononCLick(
+                findViewById(R.id.entertainmentFollowButton),
+                "entertainment",
+                "follow"
+            )
+        }
+        findViewById<View>(R.id.generalFollowButton).setOnClickListener {_ ->
+            catergoryButtononCLick(
+                findViewById(R.id.generalFollowButton),
+                "general",
+                "follow"
+            )
+        }
+        findViewById<View>(R.id.healthFollowButton).setOnClickListener {_ ->
+            catergoryButtononCLick(
+                findViewById(R.id.healthFollowButton),
+                "health",
+                "follow"
+            )
+        }
+        findViewById<View>(R.id.scienceFollowButton).setOnClickListener {_ ->
+            catergoryButtononCLick(
+                findViewById(R.id.scienceFollowButton),
+                "science",
+                "follow"
+            )
+        }
+        findViewById<View>(R.id.sportsFollowButton).setOnClickListener {_ ->
+            catergoryButtononCLick(
+                findViewById(R.id.sportsFollowButton),
+                "sports",
+                "follow"
+            )
+        }
+        findViewById<View>(R.id.technologyFollowButton).setOnClickListener {_ ->
+            catergoryButtononCLick(
+                findViewById(R.id.technologyFollowButton),
+                "technology",
+                "follow"
+            )
         }
     }
 
@@ -173,6 +264,74 @@ class SettingsAcitvity : AppCompatActivity() {
         FirebaseAuth.getInstance().signOut()
     }
 
+    private fun catergoryButtononCLick(imgButton: ImageButton, category: String, type: String) {
+        val sharPref = getSharedPreferences("userprofile", 0)
+
+        val a: Set<String> = HashSet()
+        var hold = sharPref.getStringSet(type, a)
+
+        if (type == "fav") {
+            if (!hold?.contains(category)!!) {
+                imgButton.setImageResource(R.drawable.baseline_favorite_24)
+                hold.add(category)
+            } else {
+                hold.remove(category)
+                imgButton.setImageResource(R.drawable.baseline_favorite_border_white_24)
+            }
+        } else {
+            if (!hold?.contains(category)!!) {
+                imgButton.setImageResource(R.drawable.baseline_flag_white_24)
+                hold.add(category)
+            } else {
+                hold.remove(category)
+                imgButton.setImageResource(R.drawable.baseline_outlined_flag_24)
+            }
+        }
+        sharPref.edit().putStringSet(type, hold).apply()
+    }
+
+    private fun setImgButton()
+    {
+        setUpImgButton(findViewById(R.id.generalFavButton),"fav","general")
+        setUpImgButton(findViewById(R.id.entertainmentFavButton),"fav","entertainment")
+        setUpImgButton(findViewById(R.id.businessFavButton),"fav","business")
+        setUpImgButton(findViewById(R.id.healthFavButton),"fav","health")
+        setUpImgButton(findViewById(R.id.scienceFavButton),"fav","science")
+        setUpImgButton(findViewById(R.id.technologyFavButton),"fav","technology")
+        setUpImgButton(findViewById(R.id.sportsFavButton),"fav","sports")
+
+        setUpImgButton(findViewById(R.id.generalFollowButton),"follow","general")
+        setUpImgButton(findViewById(R.id.entertainmentFollowButton),"follow","entertainment")
+        setUpImgButton(findViewById(R.id.businessFollowButton),"follow","business")
+        setUpImgButton(findViewById(R.id.healthFollowButton),"follow","health")
+        setUpImgButton(findViewById(R.id.scienceFollowButton),"follow","science")
+        setUpImgButton(findViewById(R.id.technologyFollowButton),"follow","technology")
+        setUpImgButton(findViewById(R.id.sportsFollowButton),"follow","sports")
+
+    }
+
+    private fun setUpImgButton(imgButton: ImageButton, type: String, category: String) {
+        val sharPref = getSharedPreferences("userprofile", 0)
+
+        val a: Set<String> = HashSet()
+        var hold = sharPref.getStringSet(type, a)
+
+        if (type == "fav") {
+            if (!hold?.contains(category)!!) {
+                imgButton.setImageResource(R.drawable.baseline_favorite_24)
+            } else {
+                imgButton.setImageResource(R.drawable.baseline_favorite_border_white_24)
+            }
+        } else {
+            if (!hold?.contains(category)!!) {
+                imgButton.setImageResource(R.drawable.baseline_flag_white_24)
+            } else {
+                imgButton.setImageResource(R.drawable.baseline_outlined_flag_24)
+            }
+        }
+    }
+
+
     private fun navBar() {
         val bnv: BottomNavigationView =
             findViewById<BottomNavigationView>(R.id.bottomNav) as BottomNavigationView
@@ -191,5 +350,4 @@ class SettingsAcitvity : AppCompatActivity() {
             true
         }
     }
-
 }
