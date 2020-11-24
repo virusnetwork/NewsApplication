@@ -1,15 +1,12 @@
-package com.example.newsapplication.main
+package com.example.newsapplication.following
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapplication.R
-import com.example.newsapplication.following.FollowingActivity
+import com.example.newsapplication.main.MainActivity
 import com.example.newsapplication.models.Articles
 import com.example.newsapplication.settings.SettingsAcitvity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -17,16 +14,7 @@ import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException
 
-/*
-    TODO change publisher to source
-    TODO implement faviortes
-    TODO implement following
-    TODO implement search features
-    TODO fix nav bar
-    TODO fix buttons
- */
-
-open class MainActivity : AppCompatActivity() {
+class FollowingActivity : MainActivity() {
 
     private lateinit var articles: Articles
 
@@ -60,26 +48,20 @@ open class MainActivity : AppCompatActivity() {
 
     private fun URLBuilder(): String {
         val builder = Uri.Builder()
+        val a: Set<String> = setOf("")
+        val b = getSharedPreferences("userprofile", 0).getStringSet("follow", a)
         builder.scheme("https")
             .authority("newsapi.org")
             .appendPath("v2")
             .appendPath("top-headlines")
             .appendQueryParameter("country", countryGetter())
-            .appendQueryParameter("apiKey", "cb2d036fd31f441da320db9ffcf548a5")
-        return builder.build().toString()
-    }
-
-    fun countryGetter(): String {
-        return when (getSharedPreferences("userprofile", 0).getInt("country", 0)) {
-            0 -> "GB"
-            1 -> "US"
-            2 -> "CA"
-            3 -> "FR"
-            4 -> "IE"
-            5 -> "GR"
-            else -> "GB"
+        b?.iterator()?.forEach { t ->
+            builder.appendQueryParameter("category", t)
         }
+        builder.appendQueryParameter("apiKey", "cb2d036fd31f441da320db9ffcf548a5")
 
+        println(builder.build().toString())
+        return builder.build().toString()
     }
 
 
@@ -108,21 +90,4 @@ open class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun goToURL(view: View) {
-        startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(view.findViewById<TextView>(R.id.URL).text.toString())
-            )
-        )
-
-    }
-
-    fun initialseRecylerViewAdapter(articles: Articles) {
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.adapter = MainAdapter(articles)
-
-    }
-
 }
-

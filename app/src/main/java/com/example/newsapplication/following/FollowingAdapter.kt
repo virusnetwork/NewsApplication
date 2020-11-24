@@ -1,4 +1,4 @@
-package com.example.newsapplication.main
+package com.example.newsapplication.following
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +10,8 @@ import com.example.newsapplication.R
 import com.example.newsapplication.models.Articles
 import com.squareup.picasso.Picasso
 
-
-class MainAdapter(private val articles: Articles) : RecyclerView.Adapter<MainAdapter.CustomViewHolder>() {
-
+class FollowingAdapter(private val articles: Articles) :
+    RecyclerView.Adapter<FollowingAdapter.CustomViewHolder>() {
 
     override fun getItemCount(): Int {
         return articles.articles.size
@@ -49,5 +48,3 @@ class MainAdapter(private val articles: Articles) : RecyclerView.Adapter<MainAda
 
     }
 }
-
-

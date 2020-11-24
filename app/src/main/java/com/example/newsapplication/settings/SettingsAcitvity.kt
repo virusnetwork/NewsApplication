@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.SwitchCompat
 import com.example.newsapplication.R
-import com.example.newsapplication.followingActivity
+import com.example.newsapplication.following.FollowingActivity
 import com.example.newsapplication.main.MainActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -28,13 +28,13 @@ class SettingsAcitvity : AppCompatActivity() {
         setImgButton()
         initaliseImgButton()
 
-        findViewById<Button>(R.id.sign_up_button).setOnClickListener { view ->
+        findViewById<Button>(R.id.sign_up_button).setOnClickListener {
             val emailText = findViewById<EditText>(R.id.editTextEmailAddress).text.toString()
             val passwordText = findViewById<EditText>(R.id.editTextTextPassword).text.toString()
             signUp(emailText, passwordText)
         }
 
-        findViewById<Button>(R.id.sign_in_button).setOnClickListener { view ->
+        findViewById<Button>(R.id.sign_in_button).setOnClickListener {
             val emailText = findViewById<EditText>(R.id.editTextEmailAddress).text.toString()
             val passwordText = findViewById<EditText>(R.id.editTextTextPassword).text.toString()
             signInUser(emailText, passwordText)
@@ -70,49 +70,48 @@ class SettingsAcitvity : AppCompatActivity() {
 
         }
 
-        findViewById<Button>(R.id.sign_out_button).setOnClickListener { view ->
+        findViewById<Button>(R.id.sign_out_button).setOnClickListener {
             signOut()
         }
     }
 
-    private fun initaliseImgButton()
-    {
-        findViewById<View>(R.id.entertainmentFavButton).setOnClickListener { _ ->
+    private fun initaliseImgButton() {
+        findViewById<View>(R.id.entertainmentFavButton).setOnClickListener {
             catergoryButtononCLick(
                 findViewById(R.id.entertainmentFavButton),
                 "entertainment",
                 "fav"
             )
         }
-        findViewById<View>(R.id.generalFavButton).setOnClickListener {_ ->
+        findViewById<View>(R.id.generalFavButton).setOnClickListener {
             catergoryButtononCLick(
                 findViewById(R.id.generalFavButton),
                 "general",
                 "fav"
             )
         }
-        findViewById<View>(R.id.healthFavButton).setOnClickListener {_ ->
+        findViewById<View>(R.id.healthFavButton).setOnClickListener {
             catergoryButtononCLick(
                 findViewById(R.id.healthFavButton),
                 "health",
                 "fav"
             )
         }
-        findViewById<View>(R.id.scienceFavButton).setOnClickListener {_ ->
+        findViewById<View>(R.id.scienceFavButton).setOnClickListener {
             catergoryButtononCLick(
                 findViewById(R.id.scienceFavButton),
                 "science",
                 "fav"
             )
         }
-        findViewById<View>(R.id.sportsFavButton).setOnClickListener {_ ->
+        findViewById<View>(R.id.sportsFavButton).setOnClickListener {
             catergoryButtononCLick(
                 findViewById(R.id.sportsFavButton),
                 "sports",
                 "fav"
             )
         }
-        findViewById<View>(R.id.technologyFavButton).setOnClickListener {_ ->
+        findViewById<View>(R.id.technologyFavButton).setOnClickListener {
             catergoryButtononCLick(
                 findViewById(R.id.technologyFavButton),
                 "technology",
@@ -120,42 +119,42 @@ class SettingsAcitvity : AppCompatActivity() {
             )
         }
 
-        findViewById<View>(R.id.entertainmentFollowButton).setOnClickListener {_ ->
+        findViewById<View>(R.id.entertainmentFollowButton).setOnClickListener {
             catergoryButtononCLick(
                 findViewById(R.id.entertainmentFollowButton),
                 "entertainment",
                 "follow"
             )
         }
-        findViewById<View>(R.id.generalFollowButton).setOnClickListener {_ ->
+        findViewById<View>(R.id.generalFollowButton).setOnClickListener {
             catergoryButtononCLick(
                 findViewById(R.id.generalFollowButton),
                 "general",
                 "follow"
             )
         }
-        findViewById<View>(R.id.healthFollowButton).setOnClickListener {_ ->
+        findViewById<View>(R.id.healthFollowButton).setOnClickListener {
             catergoryButtononCLick(
                 findViewById(R.id.healthFollowButton),
                 "health",
                 "follow"
             )
         }
-        findViewById<View>(R.id.scienceFollowButton).setOnClickListener {_ ->
+        findViewById<View>(R.id.scienceFollowButton).setOnClickListener {
             catergoryButtononCLick(
                 findViewById(R.id.scienceFollowButton),
                 "science",
                 "follow"
             )
         }
-        findViewById<View>(R.id.sportsFollowButton).setOnClickListener {_ ->
+        findViewById<View>(R.id.sportsFollowButton).setOnClickListener {
             catergoryButtononCLick(
                 findViewById(R.id.sportsFollowButton),
                 "sports",
                 "follow"
             )
         }
-        findViewById<View>(R.id.technologyFollowButton).setOnClickListener {_ ->
+        findViewById<View>(R.id.technologyFollowButton).setOnClickListener {
             catergoryButtononCLick(
                 findViewById(R.id.technologyFollowButton),
                 "technology",
@@ -190,7 +189,7 @@ class SettingsAcitvity : AppCompatActivity() {
 
     private fun signInUser(emailText: String, passwordText: String) {
         val btnLogin = findViewById<Button>(R.id.sign_in_button)
-        btnLogin.setOnClickListener { view ->
+        btnLogin.setOnClickListener {
             mAuth = FirebaseAuth.getInstance()
             mAuth.signInWithEmailAndPassword(
                 emailText,
@@ -200,7 +199,7 @@ class SettingsAcitvity : AppCompatActivity() {
                     this
                 ) { task ->
                     if (task.isSuccessful) {
-                        val user = mAuth.currentUser
+                        mAuth.currentUser
                         if (getSharedPreferences("userprofile", Context.MODE_PRIVATE).getString(
                                 "username",
                                 "defValue"
@@ -231,7 +230,7 @@ class SettingsAcitvity : AppCompatActivity() {
     private fun signUp(emailText: String, passwordText: String) {
 
         val btnSignUp = findViewById<Button>(R.id.sign_up_button)
-        btnSignUp.setOnClickListener { view ->
+        btnSignUp.setOnClickListener {
             mAuth = FirebaseAuth.getInstance()
             mAuth.createUserWithEmailAndPassword(
                 emailText,
@@ -240,7 +239,7 @@ class SettingsAcitvity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        val user = mAuth.currentUser
+                        mAuth.currentUser
                         val sharedPreference =
                             getSharedPreferences("userprofile", Context.MODE_PRIVATE)
                         sharedPreference.edit().putString("username", emailText).apply()
@@ -268,7 +267,7 @@ class SettingsAcitvity : AppCompatActivity() {
         val sharPref = getSharedPreferences("userprofile", 0)
 
         val a: Set<String> = HashSet()
-        var hold = sharPref.getStringSet(type, a)
+        val hold = sharPref.getStringSet(type, a)
 
         if (type == "fav") {
             if (!hold?.contains(category)!!) {
@@ -290,23 +289,22 @@ class SettingsAcitvity : AppCompatActivity() {
         sharPref.edit().putStringSet(type, hold).apply()
     }
 
-    private fun setImgButton()
-    {
-        setUpImgButton(findViewById(R.id.generalFavButton),"fav","general")
-        setUpImgButton(findViewById(R.id.entertainmentFavButton),"fav","entertainment")
-        setUpImgButton(findViewById(R.id.businessFavButton),"fav","business")
-        setUpImgButton(findViewById(R.id.healthFavButton),"fav","health")
-        setUpImgButton(findViewById(R.id.scienceFavButton),"fav","science")
-        setUpImgButton(findViewById(R.id.technologyFavButton),"fav","technology")
-        setUpImgButton(findViewById(R.id.sportsFavButton),"fav","sports")
+    private fun setImgButton() {
+        setUpImgButton(findViewById(R.id.generalFavButton), "fav", "general")
+        setUpImgButton(findViewById(R.id.entertainmentFavButton), "fav", "entertainment")
+        setUpImgButton(findViewById(R.id.businessFavButton), "fav", "business")
+        setUpImgButton(findViewById(R.id.healthFavButton), "fav", "health")
+        setUpImgButton(findViewById(R.id.scienceFavButton), "fav", "science")
+        setUpImgButton(findViewById(R.id.technologyFavButton), "fav", "technology")
+        setUpImgButton(findViewById(R.id.sportsFavButton), "fav", "sports")
 
-        setUpImgButton(findViewById(R.id.generalFollowButton),"follow","general")
-        setUpImgButton(findViewById(R.id.entertainmentFollowButton),"follow","entertainment")
-        setUpImgButton(findViewById(R.id.businessFollowButton),"follow","business")
-        setUpImgButton(findViewById(R.id.healthFollowButton),"follow","health")
-        setUpImgButton(findViewById(R.id.scienceFollowButton),"follow","science")
-        setUpImgButton(findViewById(R.id.technologyFollowButton),"follow","technology")
-        setUpImgButton(findViewById(R.id.sportsFollowButton),"follow","sports")
+        setUpImgButton(findViewById(R.id.generalFollowButton), "follow", "general")
+        setUpImgButton(findViewById(R.id.entertainmentFollowButton), "follow", "entertainment")
+        setUpImgButton(findViewById(R.id.businessFollowButton), "follow", "business")
+        setUpImgButton(findViewById(R.id.healthFollowButton), "follow", "health")
+        setUpImgButton(findViewById(R.id.scienceFollowButton), "follow", "science")
+        setUpImgButton(findViewById(R.id.technologyFollowButton), "follow", "technology")
+        setUpImgButton(findViewById(R.id.sportsFollowButton), "follow", "sports")
 
     }
 
@@ -314,7 +312,7 @@ class SettingsAcitvity : AppCompatActivity() {
         val sharPref = getSharedPreferences("userprofile", 0)
 
         val a: Set<String> = HashSet()
-        var hold = sharPref.getStringSet(type, a)
+        val hold = sharPref.getStringSet(type, a)
 
         if (type == "fav") {
             if (!hold?.contains(category)!!) {
@@ -334,13 +332,13 @@ class SettingsAcitvity : AppCompatActivity() {
 
     private fun navBar() {
         val bnv: BottomNavigationView =
-            findViewById<BottomNavigationView>(R.id.bottomNav) as BottomNavigationView
-        val followingIntent = Intent(this, followingActivity::class.java)
+            findViewById<BottomNavigationView>(R.id.bottomNav)
+        val followingIntent = Intent(this, FollowingActivity::class.java)
         val mainActivityIntent = Intent(this, MainActivity::class.java)
         val settingActivityIntent = Intent(this, SettingsAcitvity::class.java)
 
         bnv.setOnNavigationItemSelectedListener { item ->
-            when (item.getItemId()) {
+            when (item.itemId) {
                 R.id.favItem -> startActivity(followingIntent)
                 R.id.followItem -> startActivity(followingIntent)
                 R.id.worldItem -> startActivity(mainActivityIntent)
