@@ -337,6 +337,8 @@ class SettingsAcitvity : AppCompatActivity() {
         val mainActivityIntent = Intent(this, MainActivity::class.java)
         val settingActivityIntent = Intent(this, SettingsAcitvity::class.java)
 
+        bnv.selectedItemId = R.id.settingItem
+
         bnv.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.favItem -> startActivity(followingIntent)

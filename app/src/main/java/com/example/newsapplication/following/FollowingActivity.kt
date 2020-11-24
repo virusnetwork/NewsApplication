@@ -27,13 +27,14 @@ class FollowingActivity : MainActivity() {
 
     }
 
-    private fun navBar() {
+    override fun navBar() {
         val bnv: BottomNavigationView =
             findViewById<BottomNavigationView>(R.id.bottomNav) as BottomNavigationView
         val followingIntent = Intent(this, FollowingActivity::class.java)
         val mainActivityIntent = Intent(this, MainActivity::class.java)
         val settingActivityIntent = Intent(this, SettingsAcitvity::class.java)
 
+        bnv.selectedItemId = R.id.followItem
         bnv.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.favItem -> startActivity(followingIntent)
@@ -46,7 +47,7 @@ class FollowingActivity : MainActivity() {
         }
     }
 
-    private fun URLBuilder(): String {
+    override fun URLBuilder(): String {
         val builder = Uri.Builder()
         val a: Set<String> = setOf("")
         val b = getSharedPreferences("userprofile", 0).getStringSet("follow", a)
@@ -62,32 +63,6 @@ class FollowingActivity : MainActivity() {
 
         println(builder.build().toString())
         return builder.build().toString()
-    }
-
-
-    private fun getNews() {
-        val newsRequest = Request.Builder()
-            .url(URLBuilder())
-            .build()
-        val client = OkHttpClient()
-
-        client.newCall(newsRequest).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                println(e.message)
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val body = response?.body?.string()
-
-                val gson = GsonBuilder().create()
-                articles = gson.fromJson(body, Articles::class.java)
-
-                runOnUiThread {
-                    initialseRecylerViewAdapter(articles)
-                    println(URLBuilder())
-                }
-            }
-        })
     }
 
 }

@@ -22,7 +22,6 @@ import java.io.IOException
     TODO implement faviortes
     TODO implement following
     TODO implement search features
-    TODO fix nav bar
     TODO fix buttons
  */
 
@@ -39,12 +38,14 @@ open class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun navBar() {
+    open fun navBar() {
         val bnv: BottomNavigationView =
             findViewById<BottomNavigationView>(R.id.bottomNav) as BottomNavigationView
         val followingIntent = Intent(this, FollowingActivity::class.java)
         val mainActivityIntent = Intent(this, MainActivity::class.java)
         val settingActivityIntent = Intent(this, SettingsAcitvity::class.java)
+
+        bnv.selectedItemId = R.id.worldItem
 
         bnv.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -58,7 +59,7 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun URLBuilder(): String {
+    open fun URLBuilder(): String {
         val builder = Uri.Builder()
         builder.scheme("https")
             .authority("newsapi.org")
@@ -83,7 +84,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun getNews() {
+    fun getNews() {
         val newsRequest = Request.Builder()
             .url(URLBuilder())
             .build()
