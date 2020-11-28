@@ -67,6 +67,13 @@
                     android:enabled="false"
                     android:visibility="gone" />
 
+                <TextView
+                    android:id="@+id/articleContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:visibility="gone" />
+
             </LinearLayout>
 
             <!-- Buttons -->

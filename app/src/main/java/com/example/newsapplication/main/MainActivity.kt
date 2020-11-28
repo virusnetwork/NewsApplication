@@ -1,5 +1,6 @@
 package com.example.newsapplication.main
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsapplication.LowDataActivity
 import com.example.newsapplication.R
 import com.example.newsapplication.following.FollowingActivity
 import com.example.newsapplication.models.Articles
@@ -23,6 +25,7 @@ import java.io.IOException
     TODO implement following
     TODO implement search features
     TODO fix buttons
+    TODO refrences
  */
 
 open class MainActivity : AppCompatActivity() {
@@ -83,7 +86,6 @@ open class MainActivity : AppCompatActivity() {
 
     }
 
-
     fun getNews() {
         val newsRequest = Request.Builder()
             .url(URLBuilder())
@@ -96,7 +98,7 @@ open class MainActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response?.body?.string()
+                val body = response.body?.string()
 
                 val gson = GsonBuilder().create()
                 articles = gson.fromJson(body, Articles::class.java)
@@ -110,18 +112,35 @@ open class MainActivity : AppCompatActivity() {
     }
 
     fun goToURL(view: View) {
-        startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(view.findViewById<TextView>(R.id.URL).text.toString())
+
+        if (getSharedPreferences("userprofile", 0).getBoolean("datamode", false)) {
+            startActivity(
+                Intent(this, LowDataActivity::class.java).putExtra(
+                    "content",
+                    view.findViewById<TextView>(R.id.articleContent).text.toString()
+                )
             )
-        )
+        } else {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(view.findViewById<TextView>(R.id.URL).text.toString())
+                )
+            )
+        }
+
 
     }
 
     fun initialseRecylerViewAdapter(articles: Articles) {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.adapter = MainAdapter(articles)
+        recyclerView.adapter = MainAdapter(
+            articles,
+            getSharedPreferences("userprofile", Context.MODE_PRIVATE).getBoolean(
+                "datamode",
+                false
+            )
+        )
 
     }
 

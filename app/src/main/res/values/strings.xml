@@ -27,4 +27,5 @@
     <string name="general">general</string>
     <string name="health">health</string>
     <string name="sports">sports</string>
+    <string name="low_data_mode">low data mode</string>
 </resources>

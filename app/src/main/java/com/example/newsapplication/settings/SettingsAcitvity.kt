@@ -48,14 +48,6 @@ class SettingsAcitvity : AppCompatActivity() {
                 .putBoolean("datamode", false).apply()
         }
 
-        findViewById<SwitchCompat>(R.id.darkModeSwitch).setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked)
-                getSharedPreferences("userprofile", Context.MODE_PRIVATE).edit()
-                    .putBoolean("darkmode", true).apply()
-            else getSharedPreferences("userprofile", Context.MODE_PRIVATE).edit()
-                .putBoolean("darkmode", false).apply()
-        }
-
         findViewById<Spinner>(R.id.countryDropDown).onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -76,6 +68,14 @@ class SettingsAcitvity : AppCompatActivity() {
     }
 
     private fun initaliseImgButton() {
+
+        findViewById<View>(R.id.businessFavButton).setOnClickListener {
+            catergoryButtononCLick(
+                findViewById(R.id.businessFavButton),
+                "business",
+                "fav"
+            )
+        }
         findViewById<View>(R.id.entertainmentFavButton).setOnClickListener {
             catergoryButtononCLick(
                 findViewById(R.id.entertainmentFavButton),
@@ -115,6 +115,14 @@ class SettingsAcitvity : AppCompatActivity() {
             catergoryButtononCLick(
                 findViewById(R.id.technologyFavButton),
                 "technology",
+                "fav"
+            )
+        }
+
+        findViewById<View>(R.id.businessFollowButton).setOnClickListener {
+            catergoryButtononCLick(
+                findViewById(R.id.businessFollowButton),
+                "business",
                 "fav"
             )
         }
@@ -165,8 +173,6 @@ class SettingsAcitvity : AppCompatActivity() {
 
     private fun setUp() {
         val userPref = getSharedPreferences("userprofile", Context.MODE_PRIVATE)
-        findViewById<SwitchCompat>(R.id.darkModeSwitch).isChecked =
-            userPref.getBoolean("darkmode", false)
         findViewById<SwitchCompat>(R.id.dataSaverSwitch).isChecked =
             userPref.getBoolean("datamode", false)
 
