@@ -15,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 
-class SettingsAcitvity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
 
     private lateinit var mAuth: FirebaseAuth
 
@@ -341,7 +341,7 @@ class SettingsAcitvity : AppCompatActivity() {
             findViewById<BottomNavigationView>(R.id.bottomNav)
         val followingIntent = Intent(this, FollowingActivity::class.java)
         val mainActivityIntent = Intent(this, MainActivity::class.java)
-        val settingActivityIntent = Intent(this, SettingsAcitvity::class.java)
+        val settingActivityIntent = Intent(this, SettingsActivity::class.java)
 
         bnv.selectedItemId = R.id.settingItem
 

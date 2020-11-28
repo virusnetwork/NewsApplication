@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapplication.LowDataActivity
 import com.example.newsapplication.R
+import com.example.newsapplication.favorite.FavouriteActivity
 import com.example.newsapplication.following.FollowingActivity
 import com.example.newsapplication.models.Articles
-import com.example.newsapplication.settings.SettingsAcitvity
+import com.example.newsapplication.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.GsonBuilder
 import okhttp3.*
@@ -46,13 +47,14 @@ open class MainActivity : AppCompatActivity() {
             findViewById<BottomNavigationView>(R.id.bottomNav) as BottomNavigationView
         val followingIntent = Intent(this, FollowingActivity::class.java)
         val mainActivityIntent = Intent(this, MainActivity::class.java)
-        val settingActivityIntent = Intent(this, SettingsAcitvity::class.java)
+        val favouriteIntent = Intent(this, FavouriteActivity::class.java)
+        val settingActivityIntent = Intent(this, SettingsActivity::class.java)
 
         bnv.selectedItemId = R.id.worldItem
 
         bnv.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.favItem -> startActivity(followingIntent)
+                R.id.favItem -> startActivity(favouriteIntent)
                 R.id.followItem -> startActivity(followingIntent)
                 R.id.worldItem -> startActivity(mainActivityIntent)
                 R.id.settingItem -> startActivity(settingActivityIntent)

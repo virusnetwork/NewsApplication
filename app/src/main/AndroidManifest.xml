@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.example.newsapplication.settings.SettingsAcitvity">
+        <activity android:name="com.example.newsapplication.settings.SettingsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SETTING" />
 
@@ -38,6 +38,14 @@
         <activity android:name="com.example.newsapplication.LowDataActivity">
             <intent-filter>
                 <action android:name="android.intent.action.LOWDATAREADER" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.example.newsapplication.favorite.FavouriteActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.FAVORITE" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

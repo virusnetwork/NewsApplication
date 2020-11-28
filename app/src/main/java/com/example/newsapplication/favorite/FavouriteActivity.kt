@@ -1,4 +1,4 @@
-package com.example.newsapplication.following
+package com.example.newsapplication.favorite
 
 import android.content.Intent
 import android.net.Uri
@@ -6,12 +6,12 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapplication.R
-import com.example.newsapplication.favorite.FavouriteActivity
+import com.example.newsapplication.following.FollowingActivity
 import com.example.newsapplication.main.MainActivity
 import com.example.newsapplication.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class FollowingActivity : MainActivity() {
+class FavouriteActivity : MainActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +19,6 @@ class FollowingActivity : MainActivity() {
         findViewById<RecyclerView>(R.id.recyclerView).layoutManager = LinearLayoutManager(this)
         getNews()
         navBar()
-
     }
 
     override fun navBar() {
@@ -30,7 +29,7 @@ class FollowingActivity : MainActivity() {
         val favouriteIntent = Intent(this, FavouriteActivity::class.java)
         val settingActivityIntent = Intent(this, SettingsActivity::class.java)
 
-        bnv.selectedItemId = R.id.followItem
+        bnv.selectedItemId = R.id.favItem
         bnv.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.favItem -> startActivity(favouriteIntent)
@@ -46,7 +45,7 @@ class FollowingActivity : MainActivity() {
     override fun URLBuilder(): String {
         val builder = Uri.Builder()
         val a: Set<String> = setOf("")
-        val b = getSharedPreferences("userprofile", 0).getStringSet("follow", a)
+        val b = getSharedPreferences("userprofile", 0).getStringSet("fav", a)
         builder.scheme("https")
             .authority("newsapi.org")
             .appendPath("v2")
