@@ -19,7 +19,6 @@ class FollowingActivity : MainActivity() {
         findViewById<RecyclerView>(R.id.recyclerView).layoutManager = LinearLayoutManager(this)
         getNews()
         navBar()
-
     }
 
     override fun navBar() {

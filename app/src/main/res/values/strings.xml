@@ -28,4 +28,6 @@
     <string name="health">health</string>
     <string name="sports">sports</string>
     <string name="low_data_mode">low data mode</string>
+    <string name="search">search</string>
+    <string name="enter_category_to_search_for">Enter category to search for</string>
 </resources>

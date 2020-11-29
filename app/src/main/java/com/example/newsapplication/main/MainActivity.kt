@@ -14,8 +14,10 @@ import com.example.newsapplication.R
 import com.example.newsapplication.favorite.FavouriteActivity
 import com.example.newsapplication.following.FollowingActivity
 import com.example.newsapplication.models.Articles
+import com.example.newsapplication.search.SearchActivity
 import com.example.newsapplication.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException
@@ -39,7 +41,16 @@ open class MainActivity : AppCompatActivity() {
         findViewById<RecyclerView>(R.id.recyclerView).layoutManager = LinearLayoutManager(this)
         getNews()
         navBar()
+        search()
+    }
 
+    private fun search()
+    {
+        val search : View = findViewById(R.id.searchButton)
+        search.setOnClickListener {
+            startActivity(Intent(this,SearchActivity::class.java))
+
+        }
     }
 
     open fun navBar() {
