@@ -23,6 +23,13 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.setting_windows)
         mAuth = FirebaseAuth.getInstance()
+
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            // User is signed in
+            button()
+        }
+
         setUp()
         navBar()
         setImgButton()
@@ -218,12 +225,7 @@ class SettingsActivity : AppCompatActivity() {
                             sharedPreference.putString("password", passwordText)
                                 .apply()
                         }
-                        findViewById<AppCompatEditText>(R.id.editTextEmailAddress).isEnabled =
-                            false
-                        findViewById<AppCompatEditText>(R.id.editTextTextPassword).isEnabled = false
-                        btnLogin.isEnabled = false
-                        findViewById<Button>(R.id.sign_up_button).isEnabled = false
-                        findViewById<Button>(R.id.sign_out_button).isEnabled = true
+                        button()
                     } else {
                         println("Can't login")
                     }
@@ -231,6 +233,30 @@ class SettingsActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun button() {
+        findViewById<AppCompatEditText>(R.id.editTextEmailAddress).setText(
+            getSharedPreferences(
+                "userprofile",
+                0
+            ).getString("username", "null")
+        )
+        findViewById<AppCompatEditText>(R.id.editTextTextPassword).setText(
+            getSharedPreferences(
+                "userprofile",
+                0
+            ).getString("password", "null")
+        )
+
+
+
+        findViewById<AppCompatEditText>(R.id.editTextEmailAddress).isEnabled =
+            false
+        findViewById<AppCompatEditText>(R.id.editTextTextPassword).isEnabled = false
+        findViewById<Button>(R.id.sign_in_button).isEnabled = false
+        findViewById<Button>(R.id.sign_up_button).isEnabled = false
+        findViewById<Button>(R.id.sign_out_button).isEnabled = true
     }
 
     private fun signUp(emailText: String, passwordText: String) {
@@ -266,6 +292,9 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<AppCompatEditText>(R.id.editTextTextPassword).isEnabled = true
         findViewById<Button>(R.id.sign_in_button).isEnabled = true
         findViewById<Button>(R.id.sign_up_button).isEnabled = true
+
+        findViewById<AppCompatEditText>(R.id.editTextEmailAddress).setText("")
+        findViewById<AppCompatEditText>(R.id.editTextTextPassword).setText("")
         FirebaseAuth.getInstance().signOut()
     }
 

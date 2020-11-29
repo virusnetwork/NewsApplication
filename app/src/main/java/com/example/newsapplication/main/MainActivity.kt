@@ -17,16 +17,15 @@ import com.example.newsapplication.models.Articles
 import com.example.newsapplication.search.SearchActivity
 import com.example.newsapplication.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException
 
+
 /*
     TODO change publisher to source
-    TODO implement faviortes
-    TODO implement following
-    TODO implement search features
+    TODO fix user login
     TODO fix buttons
     TODO refrences
  */
@@ -36,6 +35,9 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var articles: Articles
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViewById<RecyclerView>(R.id.recyclerView).layoutManager = LinearLayoutManager(this)
@@ -48,7 +50,7 @@ open class MainActivity : AppCompatActivity() {
     {
         val search : View = findViewById(R.id.searchButton)
         search.setOnClickListener {
-            startActivity(Intent(this,SearchActivity::class.java))
+            startActivity(Intent(this, SearchActivity::class.java))
 
         }
     }
