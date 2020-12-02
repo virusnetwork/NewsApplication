@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapplication.LowDataActivity
@@ -17,7 +19,6 @@ import com.example.newsapplication.models.Articles
 import com.example.newsapplication.search.SearchActivity
 import com.example.newsapplication.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException
@@ -25,9 +26,7 @@ import java.io.IOException
 
 /*
     TODO change publisher to source
-    TODO fix user login
     TODO fix buttons
-    TODO refrences
  */
 
 open class MainActivity : AppCompatActivity() {
@@ -36,19 +35,20 @@ open class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-
-
+        if (getSharedPreferences("userprofile", 0).getBoolean("darkmode", false)) {
+            AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViewById<RecyclerView>(R.id.recyclerView).layoutManager = LinearLayoutManager(this)
         getNews()
         navBar()
         search()
+
     }
 
-    private fun search()
-    {
-        val search : View = findViewById(R.id.searchButton)
+    private fun search() {
+        val search: View = findViewById(R.id.searchButton)
         search.setOnClickListener {
             startActivity(Intent(this, SearchActivity::class.java))
 

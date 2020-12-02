@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.SwitchCompat
 import com.example.newsapplication.R
@@ -53,6 +56,18 @@ class SettingsActivity : AppCompatActivity() {
                     .putBoolean("datamode", true).apply()
             else getSharedPreferences("userprofile", Context.MODE_PRIVATE).edit()
                 .putBoolean("datamode", false).apply()
+        }
+
+        findViewById<SwitchCompat>(R.id.darkModeSwitch).setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                getSharedPreferences("userprofile", Context.MODE_PRIVATE).edit()
+                    .putBoolean("darkmode", true).apply()
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+            } else {
+                getSharedPreferences("userprofile", Context.MODE_PRIVATE).edit()
+                    .putBoolean("darkmode", false).apply()
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+            }
         }
 
         findViewById<Spinner>(R.id.countryDropDown).onItemSelectedListener = object :
@@ -182,6 +197,9 @@ class SettingsActivity : AppCompatActivity() {
         val userPref = getSharedPreferences("userprofile", Context.MODE_PRIVATE)
         findViewById<SwitchCompat>(R.id.dataSaverSwitch).isChecked =
             userPref.getBoolean("datamode", false)
+
+        findViewById<SwitchCompat>(R.id.darkModeSwitch).isChecked =
+            userPref.getBoolean("darkmode", false)
 
         setSpinner()
 
