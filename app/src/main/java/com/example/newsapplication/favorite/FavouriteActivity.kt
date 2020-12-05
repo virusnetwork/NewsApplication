@@ -10,6 +10,7 @@ import com.example.newsapplication.following.FollowingActivity
 import com.example.newsapplication.main.MainActivity
 import com.example.newsapplication.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class FavouriteActivity : MainActivity() {
 
@@ -45,7 +46,11 @@ class FavouriteActivity : MainActivity() {
     override fun URLBuilder(): String {
         val builder = Uri.Builder()
         val a: Set<String> = setOf("")
-        val b = getSharedPreferences("userprofile", 0).getStringSet("fav", a)
+        val b =
+            getSharedPreferences(FirebaseAuth.getInstance().currentUser.toString(), 0).getStringSet(
+                "fav",
+                a
+            )
         builder.scheme("https")
             .authority("newsapi.org")
             .appendPath("v2")

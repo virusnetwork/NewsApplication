@@ -2,13 +2,12 @@ package com.example.newsapplication.search
 
 import android.net.Uri
 import android.os.Bundle
-import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapplication.R
 import com.example.newsapplication.main.MainActivity
 
-class SearchViewActivity:MainActivity() {
+class SearchViewActivity : MainActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,8 +22,8 @@ class SearchViewActivity:MainActivity() {
             .authority("newsapi.org")
             .appendPath("v2")
             .appendPath("everything")
-            .appendQueryParameter("q",  intent.getStringExtra("query"))
-            .appendQueryParameter("sortBy","publishedAt")
+            .appendQueryParameter("q", intent.getStringExtra("query"))
+            .appendQueryParameter("sortBy", "publishedAt")
             .appendQueryParameter("apiKey", "cb2d036fd31f441da320db9ffcf548a5")
 
         println(builder.build().toString())

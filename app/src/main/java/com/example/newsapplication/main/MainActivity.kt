@@ -19,6 +19,7 @@ import com.example.newsapplication.models.Articles
 import com.example.newsapplication.search.SearchActivity
 import com.example.newsapplication.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException
@@ -35,7 +36,11 @@ open class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        if (getSharedPreferences("userprofile", 0).getBoolean("darkmode", false)) {
+        if (getSharedPreferences(
+                FirebaseAuth.getInstance().currentUser.toString(),
+                0
+            ).getBoolean("darkmode", false)
+        ) {
             AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         }
         super.onCreate(savedInstanceState)
@@ -89,7 +94,10 @@ open class MainActivity : AppCompatActivity() {
     }
 
     fun countryGetter(): String {
-        return when (getSharedPreferences("userprofile", 0).getInt("country", 0)) {
+        return when (getSharedPreferences(
+            FirebaseAuth.getInstance().currentUser.toString(),
+            0
+        ).getInt("country", 0)) {
             0 -> "GB"
             1 -> "US"
             2 -> "CA"
@@ -128,7 +136,11 @@ open class MainActivity : AppCompatActivity() {
 
     fun goToURL(view: View) {
 
-        if (getSharedPreferences("userprofile", 0).getBoolean("datamode", false)) {
+        if (getSharedPreferences(
+                FirebaseAuth.getInstance().currentUser.toString(),
+                0
+            ).getBoolean("datamode", false)
+        ) {
             startActivity(
                 Intent(this, LowDataActivity::class.java).putExtra(
                     "content",
@@ -151,7 +163,10 @@ open class MainActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.adapter = MainAdapter(
             articles,
-            getSharedPreferences("userprofile", Context.MODE_PRIVATE).getBoolean(
+            getSharedPreferences(
+                FirebaseAuth.getInstance().currentUser.toString(),
+                Context.MODE_PRIVATE
+            ).getBoolean(
                 "datamode",
                 false
             )

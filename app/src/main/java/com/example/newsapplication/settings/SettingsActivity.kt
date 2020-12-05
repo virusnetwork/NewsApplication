@@ -52,19 +52,31 @@ class SettingsActivity : AppCompatActivity() {
 
         findViewById<SwitchCompat>(R.id.dataSaverSwitch).setOnCheckedChangeListener { _, isChecked ->
             if (isChecked)
-                getSharedPreferences("userprofile", Context.MODE_PRIVATE).edit()
+                getSharedPreferences(
+                    FirebaseAuth.getInstance().currentUser.toString(),
+                    Context.MODE_PRIVATE
+                ).edit()
                     .putBoolean("datamode", true).apply()
-            else getSharedPreferences("userprofile", Context.MODE_PRIVATE).edit()
+            else getSharedPreferences(
+                FirebaseAuth.getInstance().currentUser.toString(),
+                Context.MODE_PRIVATE
+            ).edit()
                 .putBoolean("datamode", false).apply()
         }
 
         findViewById<SwitchCompat>(R.id.darkModeSwitch).setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                getSharedPreferences("userprofile", Context.MODE_PRIVATE).edit()
+                getSharedPreferences(
+                    FirebaseAuth.getInstance().currentUser.toString(),
+                    Context.MODE_PRIVATE
+                ).edit()
                     .putBoolean("darkmode", true).apply()
                 AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
             } else {
-                getSharedPreferences("userprofile", Context.MODE_PRIVATE).edit()
+                getSharedPreferences(
+                    FirebaseAuth.getInstance().currentUser.toString(),
+                    Context.MODE_PRIVATE
+                ).edit()
                     .putBoolean("darkmode", false).apply()
                 AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
             }
@@ -76,7 +88,10 @@ class SettingsActivity : AppCompatActivity() {
                 p0: AdapterView<*>?, p1: View?, p2: Int, p3:
                 Long
             ) {
-                getSharedPreferences("userprofile", Context.MODE_PRIVATE).edit()
+                getSharedPreferences(
+                    FirebaseAuth.getInstance().currentUser.toString(),
+                    Context.MODE_PRIVATE
+                ).edit()
                     .putInt("country", p2).apply()
             }
 
@@ -87,6 +102,8 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<Button>(R.id.sign_out_button).setOnClickListener {
             signOut()
         }
+
+
     }
 
     private fun initaliseImgButton() {
@@ -194,7 +211,10 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setUp() {
-        val userPref = getSharedPreferences("userprofile", Context.MODE_PRIVATE)
+        val userPref = getSharedPreferences(
+            FirebaseAuth.getInstance().currentUser.toString(),
+            Context.MODE_PRIVATE
+        )
         findViewById<SwitchCompat>(R.id.dataSaverSwitch).isChecked =
             userPref.getBoolean("datamode", false)
 
@@ -214,7 +234,10 @@ class SettingsActivity : AppCompatActivity() {
             spinner.adapter = adapter
         }
         findViewById<Spinner>(R.id.countryDropDown).setSelection(
-            getSharedPreferences("userprofile", Context.MODE_PRIVATE).getInt("country", 0)
+            getSharedPreferences(
+                FirebaseAuth.getInstance().currentUser.toString(),
+                Context.MODE_PRIVATE
+            ).getInt("country", 0)
         )
     }
 
@@ -231,13 +254,19 @@ class SettingsActivity : AppCompatActivity() {
                 ) { task ->
                     if (task.isSuccessful) {
                         mAuth.currentUser
-                        if (getSharedPreferences("userprofile", Context.MODE_PRIVATE).getString(
+                        if (getSharedPreferences(
+                                FirebaseAuth.getInstance().currentUser.toString(),
+                                Context.MODE_PRIVATE
+                            ).getString(
                                 "username",
                                 "defValue"
                             ) == "defValue"
                         ) {
                             val sharedPreference =
-                                getSharedPreferences("userprofile", Context.MODE_PRIVATE).edit()
+                                getSharedPreferences(
+                                    FirebaseAuth.getInstance().currentUser.toString(),
+                                    Context.MODE_PRIVATE
+                                ).edit()
                             sharedPreference.putString("username", emailText)
                                 .apply()
                             sharedPreference.putString("password", passwordText)
@@ -291,7 +320,10 @@ class SettingsActivity : AppCompatActivity() {
                         // Sign in success, update UI with the signed-in user's information
                         mAuth.currentUser
                         val sharedPreference =
-                            getSharedPreferences("userprofile", Context.MODE_PRIVATE)
+                            getSharedPreferences(
+                                FirebaseAuth.getInstance().currentUser.toString(),
+                                Context.MODE_PRIVATE
+                            )
                         sharedPreference.edit().putString("username", emailText).apply()
                         sharedPreference.edit().putString("password", passwordText).apply()
                         signInUser(emailText, passwordText)
@@ -317,7 +349,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun catergoryButtononCLick(imgButton: ImageButton, category: String, type: String) {
-        val sharPref = getSharedPreferences("userprofile", 0)
+        val sharPref = getSharedPreferences(FirebaseAuth.getInstance().currentUser.toString(), 0)
 
         val a: Set<String> = HashSet()
         val hold = sharPref.getStringSet(type, a)
@@ -330,7 +362,7 @@ class SettingsActivity : AppCompatActivity() {
                 hold.remove(category)
                 imgButton.setImageResource(R.drawable.baseline_favorite_border_white_24)
             }
-        } else {
+        } else if (type == "follow") {
             if (!hold?.contains(category)!!) {
                 imgButton.setImageResource(R.drawable.baseline_flag_white_24)
                 hold.add(category)
@@ -362,7 +394,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setUpImgButton(imgButton: ImageButton, type: String, category: String) {
-        val sharPref = getSharedPreferences("userprofile", 0)
+        val sharPref = getSharedPreferences(FirebaseAuth.getInstance().currentUser.toString(), 0)
 
         val a: Set<String> = HashSet()
         val hold = sharPref.getStringSet(type, a)
