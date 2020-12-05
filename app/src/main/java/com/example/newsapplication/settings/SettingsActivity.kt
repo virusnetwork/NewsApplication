@@ -162,7 +162,7 @@ class SettingsActivity : AppCompatActivity() {
             catergoryButtononCLick(
                 findViewById(R.id.businessFollowButton),
                 "business",
-                "fav"
+                "follow"
             )
         }
 
@@ -278,8 +278,6 @@ class SettingsActivity : AppCompatActivity() {
                     }
                 }
         }
-
-
     }
 
     private fun button() {
@@ -351,27 +349,21 @@ class SettingsActivity : AppCompatActivity() {
     private fun catergoryButtononCLick(imgButton: ImageButton, category: String, type: String) {
         val sharPref = getSharedPreferences(FirebaseAuth.getInstance().currentUser.toString(), 0)
 
-        val a: Set<String> = HashSet()
-        val hold = sharPref.getStringSet(type, a)
-
-        if (type == "fav") {
-            if (!hold?.contains(category)!!) {
-                imgButton.setImageResource(R.drawable.baseline_favorite_24)
-                hold.add(category)
-            } else {
-                hold.remove(category)
+        if (sharPref.getBoolean(type + category, false)) {
+            sharPref.edit().putBoolean(type + category, false).apply()
+            if (type == "fav") {
                 imgButton.setImageResource(R.drawable.baseline_favorite_border_white_24)
-            }
-        } else if (type == "follow") {
-            if (!hold?.contains(category)!!) {
-                imgButton.setImageResource(R.drawable.baseline_flag_white_24)
-                hold.add(category)
             } else {
-                hold.remove(category)
                 imgButton.setImageResource(R.drawable.baseline_outlined_flag_24)
             }
+        } else {
+            sharPref.edit().putBoolean(type + category, true).apply()
+            if (type == "fav") {
+                imgButton.setImageResource(R.drawable.baseline_favorite_24)
+            } else {
+                imgButton.setImageResource(R.drawable.baseline_flag_white_24)
+            }
         }
-        sharPref.edit().putStringSet(type, hold).apply()
     }
 
     private fun setImgButton() {
@@ -395,22 +387,14 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun setUpImgButton(imgButton: ImageButton, type: String, category: String) {
         val sharPref = getSharedPreferences(FirebaseAuth.getInstance().currentUser.toString(), 0)
-
-        val a: Set<String> = HashSet()
-        val hold = sharPref.getStringSet(type, a)
-
-        if (type == "fav") {
-            if (!hold?.contains(category)!!) {
+        if (sharPref.getBoolean(type + category, false)) {
+            if (type == "fav") {
                 imgButton.setImageResource(R.drawable.baseline_favorite_24)
-            } else {
-                imgButton.setImageResource(R.drawable.baseline_favorite_border_white_24)
-            }
+            } else imgButton.setImageResource(R.drawable.baseline_flag_white_24)
         } else {
-            if (!hold?.contains(category)!!) {
-                imgButton.setImageResource(R.drawable.baseline_flag_white_24)
-            } else {
-                imgButton.setImageResource(R.drawable.baseline_outlined_flag_24)
-            }
+            if (type == "fav") {
+                imgButton.setImageResource(R.drawable.baseline_favorite_border_white_24)
+            } else imgButton.setImageResource(R.drawable.baseline_outlined_flag_24)
         }
     }
 

@@ -45,18 +45,33 @@ class FollowingActivity : MainActivity() {
 
     override fun URLBuilder(): String {
         val builder = Uri.Builder()
-        val a: Set<String> = setOf("")
-        val b =
-            getSharedPreferences(FirebaseAuth.getInstance().currentUser.toString(), 0).getStringSet(
-                "follow",
-                a
-            )
+        val category = setOf<String>(
+            "general",
+            "entertainment",
+            "business",
+            "health",
+            "science",
+            "technology",
+            "sports"
+        )
+
+        val b = mutableSetOf<String>()
+        for (cat in category) {
+            (if (getSharedPreferences(
+                    FirebaseAuth.getInstance().currentUser.toString(),
+                    0
+                ).getBoolean("fav$cat", false)
+            ) {
+                b.add(cat)
+            })
+
+        }
         builder.scheme("https")
             .authority("newsapi.org")
             .appendPath("v2")
             .appendPath("top-headlines")
             .appendQueryParameter("country", countryGetter())
-        b?.iterator()?.forEach { t ->
+        b.iterator().forEach { t ->
             builder.appendQueryParameter("category", t)
         }
         builder.appendQueryParameter("apiKey", "cb2d036fd31f441da320db9ffcf548a5")
