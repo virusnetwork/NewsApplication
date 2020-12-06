@@ -17,27 +17,41 @@ import com.example.newsapplication.main.MainActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
-
+/**
+ * Setting activity
+ *
+ * @property mAuth FirebaseAuth
+ * @author Miles Singleton (954581)
+ */
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var mAuth: FirebaseAuth
 
+    /**
+     * sets up activity
+     *
+     * @param savedInstanceState Bundle?
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.setting_windows)
         mAuth = FirebaseAuth.getInstance()
 
+        ///checks if user is loged in
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
             // User is signed in
             button()
         }
 
-        setUp()
+        ///set up several parts of activity
+        setUpSwitches()
         navBar()
         setImgButton()
-        initaliseImgButton()
+        initialiseImgButton()
 
+
+        ///Sets up the on click events for buttons and switches
         findViewById<Button>(R.id.sign_up_button).setOnClickListener {
             val emailText = findViewById<EditText>(R.id.editTextEmailAddress).text.toString()
             val passwordText = findViewById<EditText>(R.id.editTextTextPassword).text.toString()
@@ -106,7 +120,10 @@ class SettingsActivity : AppCompatActivity() {
 
     }
 
-    private fun initaliseImgButton() {
+    /**
+     * initialises the image buttons
+     */
+    private fun initialiseImgButton() {
 
         findViewById<View>(R.id.businessFavButton).setOnClickListener {
             catergoryButtononCLick(
@@ -210,7 +227,10 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUp() {
+    /**
+     * Sets up switches and spinner
+     */
+    private fun setUpSwitches() {
         val userPref = getSharedPreferences(
             FirebaseAuth.getInstance().currentUser.toString(),
             Context.MODE_PRIVATE
@@ -225,6 +245,9 @@ class SettingsActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Sets up spinner for selecting a country
+     */
     private fun setSpinner() {
         val countries = resources.getStringArray(R.array.countryDropDownItems)
 
@@ -241,6 +264,12 @@ class SettingsActivity : AppCompatActivity() {
         )
     }
 
+    /**
+     * Signs in user
+     *
+     * @param emailText user's email
+     * @param passwordText user's password
+     */
     private fun signInUser(emailText: String, passwordText: String) {
         val btnLogin = findViewById<Button>(R.id.sign_in_button)
         btnLogin.setOnClickListener {
@@ -280,6 +309,11 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * enter user's login details into edit text boxes,
+     * used for HCI to give user feedback they are lodged in
+     * also disables several buttons lodged in users don't need
+     */
     private fun button() {
         findViewById<AppCompatEditText>(R.id.editTextEmailAddress).setText(
             getSharedPreferences(
@@ -304,6 +338,11 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<Button>(R.id.sign_out_button).isEnabled = true
     }
 
+    /**
+     * Sign up user for account
+     * @param emailText String
+     * @param passwordText String
+     */
     private fun signUp(emailText: String, passwordText: String) {
 
         val btnSignUp = findViewById<Button>(R.id.sign_up_button)
@@ -333,6 +372,9 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Sign out current user
+     */
     private fun signOut() {
         FirebaseAuth.getInstance().signOut()
         findViewById<AppCompatEditText>(R.id.editTextEmailAddress).isEnabled =
@@ -346,6 +388,12 @@ class SettingsActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signOut()
     }
 
+    /**
+     * Changes img button icon based to either selected or unselected
+     * @param imgButton ImageButton
+     * @param category String
+     * @param type String
+     */
     private fun catergoryButtononCLick(imgButton: ImageButton, category: String, type: String) {
         val sharPref = getSharedPreferences(FirebaseAuth.getInstance().currentUser.toString(), 0)
 
@@ -366,6 +414,9 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Function for setting the image of each of the img button
+     */
     private fun setImgButton() {
         setUpImgButton(findViewById(R.id.generalFavButton), "fav", "general")
         setUpImgButton(findViewById(R.id.entertainmentFavButton), "fav", "entertainment")
@@ -385,6 +436,12 @@ class SettingsActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Set up the img button based off if the user has selected it
+     * @param imgButton ImageButton
+     * @param type String
+     * @param category String
+     */
     private fun setUpImgButton(imgButton: ImageButton, type: String, category: String) {
         val sharPref = getSharedPreferences(FirebaseAuth.getInstance().currentUser.toString(), 0)
         if (sharPref.getBoolean(type + category, false)) {
@@ -398,7 +455,9 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-
+    /**
+     * Set up the nav bar
+     */
     private fun navBar() {
         val bnv: BottomNavigationView =
             findViewById<BottomNavigationView>(R.id.bottomNav)

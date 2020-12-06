@@ -12,6 +12,11 @@ import com.example.newsapplication.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * Creates the following acitivty
+ *
+ * @author Miles Singleton (954581)
+ */
 class FollowingActivity : MainActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +27,9 @@ class FollowingActivity : MainActivity() {
         navBar()
     }
 
+    /**
+     * Sets up the nav bar
+     */
     override fun navBar() {
         val bnv: BottomNavigationView =
             findViewById<BottomNavigationView>(R.id.bottomNav) as BottomNavigationView
@@ -43,6 +51,11 @@ class FollowingActivity : MainActivity() {
         }
     }
 
+    /**
+     * Builds the web address for getting news articles of users following categories
+     *
+     * @return String
+     */
     override fun URLBuilder(): String {
         val builder = Uri.Builder()
         val category = setOf<String>(
@@ -60,7 +73,7 @@ class FollowingActivity : MainActivity() {
             (if (getSharedPreferences(
                     FirebaseAuth.getInstance().currentUser.toString(),
                     0
-                ).getBoolean("fav$cat", false)
+                ).getBoolean("follow$cat", false)
             ) {
                 b.add(cat)
             })
@@ -76,7 +89,6 @@ class FollowingActivity : MainActivity() {
         }
         builder.appendQueryParameter("apiKey", "cb2d036fd31f441da320db9ffcf548a5")
 
-        println(builder.build().toString())
         return builder.build().toString()
     }
 

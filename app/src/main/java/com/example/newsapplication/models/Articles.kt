@@ -1,5 +1,14 @@
 package com.example.newsapplication.models
 
+/**
+ * Data class for an array of articles gotten from NewsAPI
+ * @property status String
+ * @property totalResults Int
+ * @property articles Array<Article>
+ * @constructor
+ *
+ * @author Miles Singleton (954581)
+ */
 data class Articles(
     val status: String,
     val totalResults: Int,

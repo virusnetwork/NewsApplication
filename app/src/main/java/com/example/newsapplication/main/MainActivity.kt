@@ -11,10 +11,10 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsapplication.LowDataActivity
 import com.example.newsapplication.R
 import com.example.newsapplication.favorite.FavouriteActivity
 import com.example.newsapplication.following.FollowingActivity
+import com.example.newsapplication.lowdata.LowDataActivity
 import com.example.newsapplication.models.Articles
 import com.example.newsapplication.search.SearchActivity
 import com.example.newsapplication.settings.SettingsActivity
@@ -24,16 +24,21 @@ import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException
 
-
-/*
-    TODO change publisher to source
-    TODO fix buttons
+/**
+ * CLass for drawing all-headlines (main) activity
+ *
+ * @property articles Articles
+ * @author Miles Singleton (954581)
  */
-
 open class MainActivity : AppCompatActivity() {
 
     private lateinit var articles: Articles
 
+    /**
+     * Creates main activity
+     *
+     * @param savedInstanceState Bundle?
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
 
         if (getSharedPreferences(
@@ -52,6 +57,9 @@ open class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * sets on-click for the search button
+     */
     private fun search() {
         val search: View = findViewById(R.id.searchButton)
         search.setOnClickListener {
@@ -60,6 +68,9 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Sets up nav bar
+     */
     open fun navBar() {
         val bnv: BottomNavigationView =
             findViewById<BottomNavigationView>(R.id.bottomNav) as BottomNavigationView
@@ -82,6 +93,11 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Builds URL for finding all headlines
+     *
+     * @return The URL for receiving news articles
+     */
     open fun URLBuilder(): String {
         val builder = Uri.Builder()
         builder.scheme("https")
@@ -93,6 +109,11 @@ open class MainActivity : AppCompatActivity() {
         return builder.build().toString()
     }
 
+    /**
+     * Sets up the country to use in URL builder
+     *
+     * @return two character country code
+     */
     fun countryGetter(): String {
         return when (getSharedPreferences(
             FirebaseAuth.getInstance().currentUser.toString(),
@@ -109,6 +130,10 @@ open class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Gets all news articles from URL builder,
+     * then fills the articles property with news articles
+     */
     fun getNews() {
         val newsRequest = Request.Builder()
             .url(URLBuilder())
@@ -128,12 +153,16 @@ open class MainActivity : AppCompatActivity() {
 
                 runOnUiThread {
                     initialseRecylerViewAdapter(articles)
-                    println(URLBuilder())
                 }
             }
         })
     }
 
+    /**
+     * Used to go open web browser with user selected news article
+     *
+     * @param view the news card the user has selected
+     */
     fun goToURL(view: View) {
 
         if (getSharedPreferences(
@@ -159,6 +188,11 @@ open class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Sets up news cards to display all articles in articles
+     *
+     * @param articles Articles
+     */
     fun initialseRecylerViewAdapter(articles: Articles) {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.adapter = MainAdapter(

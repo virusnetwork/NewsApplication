@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.example.newsapplication.LowDataActivity">
+        <activity android:name="com.example.newsapplication.lowdata.LowDataActivity">
             <intent-filter>
                 <action android:name="android.intent.action.LOWDATAREADER" />
 

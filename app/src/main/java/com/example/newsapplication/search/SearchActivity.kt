@@ -7,7 +7,19 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.newsapplication.R
 
+/**
+ * Sets up search activity
+ * activity for entering user's search query
+ *
+ * @author Miles Singleton (954581)
+ */
 class SearchActivity : AppCompatActivity() {
+
+    /**
+     * creates view for entering user search query
+     *
+     * @param savedInstanceState Bundle?
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

@@ -12,8 +12,19 @@ import com.example.newsapplication.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * Class for creating the favorite activity
+ *
+ * @author Miles Singleton (954581)
+ */
 class FavouriteActivity : MainActivity() {
 
+
+    /**
+     * Creates and initialises the activity
+     *
+     * @param savedInstanceState Bundle?
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,6 +33,9 @@ class FavouriteActivity : MainActivity() {
         navBar()
     }
 
+    /**
+     * Implements the nav bar
+     */
     override fun navBar() {
         val bnv: BottomNavigationView =
             findViewById<BottomNavigationView>(R.id.bottomNav) as BottomNavigationView
@@ -43,6 +57,11 @@ class FavouriteActivity : MainActivity() {
         }
     }
 
+    /**
+     * Builds the URL for all the user's favorite category
+     *
+     * @return String
+     */
     override fun URLBuilder(): String {
         val builder = Uri.Builder()
         val category = setOf<String>(
@@ -60,7 +79,8 @@ class FavouriteActivity : MainActivity() {
             (if (getSharedPreferences(
                     FirebaseAuth.getInstance().currentUser.toString(),
                     0
-                ).getBoolean("fav$cat",false)){
+                ).getBoolean("fav$cat", false)
+            ) {
                 b.add(cat)
             })
 
