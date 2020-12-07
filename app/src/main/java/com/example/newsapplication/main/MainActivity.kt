@@ -42,7 +42,7 @@ open class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         if (getSharedPreferences(
-                FirebaseAuth.getInstance().currentUser.toString(),
+                FirebaseAuth.getInstance().currentUser?.email.toString(),
                 0
             ).getBoolean("darkmode", false)
         ) {
@@ -116,7 +116,7 @@ open class MainActivity : AppCompatActivity() {
      */
     fun countryGetter(): String {
         return when (getSharedPreferences(
-            FirebaseAuth.getInstance().currentUser.toString(),
+            FirebaseAuth.getInstance().currentUser?.email.toString(),
             0
         ).getInt("country", 0)) {
             0 -> "GB"
@@ -166,7 +166,7 @@ open class MainActivity : AppCompatActivity() {
     fun goToURL(view: View) {
 
         if (getSharedPreferences(
-                FirebaseAuth.getInstance().currentUser.toString(),
+                FirebaseAuth.getInstance().currentUser?.email.toString(),
                 0
             ).getBoolean("datamode", false)
         ) {
@@ -198,7 +198,7 @@ open class MainActivity : AppCompatActivity() {
         recyclerView.adapter = MainAdapter(
             articles,
             getSharedPreferences(
-                FirebaseAuth.getInstance().currentUser.toString(),
+                FirebaseAuth.getInstance().currentUser?.email.toString(),
                 Context.MODE_PRIVATE
             ).getBoolean(
                 "datamode",

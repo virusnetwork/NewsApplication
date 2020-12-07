@@ -71,7 +71,7 @@ class FollowingActivity : MainActivity() {
         val b = mutableSetOf<String>()
         for (cat in category) {
             (if (getSharedPreferences(
-                    FirebaseAuth.getInstance().currentUser.toString(),
+                    FirebaseAuth.getInstance().currentUser?.email.toString(),
                     0
                 ).getBoolean("follow$cat", false)
             ) {

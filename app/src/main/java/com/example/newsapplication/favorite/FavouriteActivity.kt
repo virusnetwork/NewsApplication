@@ -76,8 +76,7 @@ class FavouriteActivity : MainActivity() {
 
         val b = mutableSetOf<String>()
         for (cat in category) {
-            (if (getSharedPreferences(
-                    FirebaseAuth.getInstance().currentUser.toString(),
+            (if (getSharedPreferences(FirebaseAuth.getInstance().currentUser?.email.toString(),
                     0
                 ).getBoolean("fav$cat", false)
             ) {

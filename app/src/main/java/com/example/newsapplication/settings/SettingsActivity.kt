@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.SwitchCompat
 import com.example.newsapplication.R
+import com.example.newsapplication.favorite.FavouriteActivity
 import com.example.newsapplication.following.FollowingActivity
 import com.example.newsapplication.main.MainActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -67,12 +68,12 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<SwitchCompat>(R.id.dataSaverSwitch).setOnCheckedChangeListener { _, isChecked ->
             if (isChecked)
                 getSharedPreferences(
-                    FirebaseAuth.getInstance().currentUser.toString(),
+                    FirebaseAuth.getInstance().currentUser?.email.toString(),
                     Context.MODE_PRIVATE
                 ).edit()
                     .putBoolean("datamode", true).apply()
             else getSharedPreferences(
-                FirebaseAuth.getInstance().currentUser.toString(),
+                FirebaseAuth.getInstance().currentUser?.email.toString(),
                 Context.MODE_PRIVATE
             ).edit()
                 .putBoolean("datamode", false).apply()
@@ -81,14 +82,14 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<SwitchCompat>(R.id.darkModeSwitch).setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 getSharedPreferences(
-                    FirebaseAuth.getInstance().currentUser.toString(),
+                    FirebaseAuth.getInstance().currentUser?.email.toString(),
                     Context.MODE_PRIVATE
                 ).edit()
                     .putBoolean("darkmode", true).apply()
                 AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
             } else {
                 getSharedPreferences(
-                    FirebaseAuth.getInstance().currentUser.toString(),
+                    FirebaseAuth.getInstance().currentUser?.email.toString(),
                     Context.MODE_PRIVATE
                 ).edit()
                     .putBoolean("darkmode", false).apply()
@@ -103,7 +104,7 @@ class SettingsActivity : AppCompatActivity() {
                 Long
             ) {
                 getSharedPreferences(
-                    FirebaseAuth.getInstance().currentUser.toString(),
+                    FirebaseAuth.getInstance().currentUser?.email.toString(),
                     Context.MODE_PRIVATE
                 ).edit()
                     .putInt("country", p2).apply()
@@ -232,7 +233,7 @@ class SettingsActivity : AppCompatActivity() {
      */
     private fun setUpSwitches() {
         val userPref = getSharedPreferences(
-            FirebaseAuth.getInstance().currentUser.toString(),
+            FirebaseAuth.getInstance().currentUser?.email.toString(),
             Context.MODE_PRIVATE
         )
         findViewById<SwitchCompat>(R.id.dataSaverSwitch).isChecked =
@@ -258,7 +259,7 @@ class SettingsActivity : AppCompatActivity() {
         }
         findViewById<Spinner>(R.id.countryDropDown).setSelection(
             getSharedPreferences(
-                FirebaseAuth.getInstance().currentUser.toString(),
+                FirebaseAuth.getInstance().currentUser?.email.toString(),
                 Context.MODE_PRIVATE
             ).getInt("country", 0)
         )
@@ -284,7 +285,7 @@ class SettingsActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         mAuth.currentUser
                         if (getSharedPreferences(
-                                FirebaseAuth.getInstance().currentUser.toString(),
+                                FirebaseAuth.getInstance().currentUser?.email.toString(),
                                 Context.MODE_PRIVATE
                             ).getString(
                                 "username",
@@ -293,7 +294,7 @@ class SettingsActivity : AppCompatActivity() {
                         ) {
                             val sharedPreference =
                                 getSharedPreferences(
-                                    FirebaseAuth.getInstance().currentUser.toString(),
+                                    FirebaseAuth.getInstance().currentUser?.email.toString(),
                                     Context.MODE_PRIVATE
                                 ).edit()
                             sharedPreference.putString("username", emailText)
@@ -316,20 +317,9 @@ class SettingsActivity : AppCompatActivity() {
      */
     private fun button() {
         findViewById<AppCompatEditText>(R.id.editTextEmailAddress).setText(
-            getSharedPreferences(
-                "userprofile",
-                0
-            ).getString("username", "null")
+            FirebaseAuth.getInstance().currentUser?.email.toString()
         )
-        findViewById<AppCompatEditText>(R.id.editTextTextPassword).setText(
-            getSharedPreferences(
-                "userprofile",
-                0
-            ).getString("password", "null")
-        )
-
-
-
+        
         findViewById<AppCompatEditText>(R.id.editTextEmailAddress).isEnabled =
             false
         findViewById<AppCompatEditText>(R.id.editTextTextPassword).isEnabled = false
@@ -358,7 +348,7 @@ class SettingsActivity : AppCompatActivity() {
                         mAuth.currentUser
                         val sharedPreference =
                             getSharedPreferences(
-                                FirebaseAuth.getInstance().currentUser.toString(),
+                                FirebaseAuth.getInstance().currentUser?.email.toString(),
                                 Context.MODE_PRIVATE
                             )
                         sharedPreference.edit().putString("username", emailText).apply()
@@ -395,7 +385,7 @@ class SettingsActivity : AppCompatActivity() {
      * @param type String
      */
     private fun catergoryButtononCLick(imgButton: ImageButton, category: String, type: String) {
-        val sharPref = getSharedPreferences(FirebaseAuth.getInstance().currentUser.toString(), 0)
+        val sharPref = getSharedPreferences(FirebaseAuth.getInstance().currentUser?.email.toString(), 0)
 
         if (sharPref.getBoolean(type + category, false)) {
             sharPref.edit().putBoolean(type + category, false).apply()
@@ -443,7 +433,7 @@ class SettingsActivity : AppCompatActivity() {
      * @param category String
      */
     private fun setUpImgButton(imgButton: ImageButton, type: String, category: String) {
-        val sharPref = getSharedPreferences(FirebaseAuth.getInstance().currentUser.toString(), 0)
+        val sharPref = getSharedPreferences(FirebaseAuth.getInstance().currentUser?.email.toString(), 0)
         if (sharPref.getBoolean(type + category, false)) {
             if (type == "fav") {
                 imgButton.setImageResource(R.drawable.baseline_favorite_24)
@@ -464,12 +454,13 @@ class SettingsActivity : AppCompatActivity() {
         val followingIntent = Intent(this, FollowingActivity::class.java)
         val mainActivityIntent = Intent(this, MainActivity::class.java)
         val settingActivityIntent = Intent(this, SettingsActivity::class.java)
+        val favIntent = Intent(this, FavouriteActivity::class.java)
 
         bnv.selectedItemId = R.id.settingItem
 
         bnv.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.favItem -> startActivity(followingIntent)
+                R.id.favItem -> startActivity(favIntent)
                 R.id.followItem -> startActivity(followingIntent)
                 R.id.worldItem -> startActivity(mainActivityIntent)
                 R.id.settingItem -> startActivity(settingActivityIntent)
